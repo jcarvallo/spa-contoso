@@ -20,25 +20,32 @@ const DepartamentList: FC<ContosoModel> = () => {
     
     console.log(context);
      
-    useEffect(() => {
-        try {
-            servicesDepartament.getAll()
-                .then(res => {
-                    setState((preState: any) => ({ ...preState, departaments: res }))
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+    const listDepartment=()=>{
+       try {
+         servicesDepartament
+           .getAll()
+           .then(res => {
+             setState((preState: any) => ({
+               ...preState,
+               departaments: res.data
+             }));
+           })
+           .catch(error => {
+             console.log(error);
+           });
 
-        dispatch({ type: 'changeHeader', title: 'Department List' })
+         dispatch({ type: "changeHeader", title: "Department List" });
+       } catch (error) {
+         console.log(error);
+       }
+    }
 
-        } catch (error) {
-            console.log(error);
-        }
+     useEffect(() => {
+         listDepartment();
+     }, []);
 
-    }, [dispatch])
-
-    const handleAction = (to: string, data?: any) => navigate(to, { state: data })
+    const handleAction = (to: string, data?: any) =>
+      navigate(to, { state: data});
 
     const handleDelete = (data: any) => {
 
@@ -49,82 +56,95 @@ const DepartamentList: FC<ContosoModel> = () => {
             {
                 id: data.id,
                 modalActive: () => modalActive(),
-                title: `Delete department ${data.title}`
+                Title: `Delete department ${data.name}`
             }
         }))
 
     }
 
+    console.log(state.departaments);
+    
+
     const modalActive = () => setState((preState: any) => ({ ...preState, active: !preState.active }))
 
     return (
-        <Card>
-            <CardBody>
-                <Row>
-                    <Col xs={11}>
-                        <Table striped>
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {state.departaments.length > 0 ?
-                                    state.departaments.map((depart: any, index: any) => (
-                                        <tr key={index}>
-                                            <th scope="row">{depart.id}</th>
-                                            <td>{depart.title}</td>
-                                            <td>{depart.description}</td>
-                                            <td>
-                                                <Button
-                                                    onClick={() => handleAction('/departament/edit', depart)}
-                                                    color="link"
-                                                    title="Edit Departament"
-                                                >
-                                                    Edit
-                                                </Button>
-                                                {''}
-                                                <Button
-                                                    onClick={() => handleDelete(depart)}
-                                                    color="link"
-                                                    title="Delete Departament"
-                                                >
-                                                    Delete
-                                                </Button>
-                                            </td>
-                                        </tr>
-                                    ))
-                                    : <tr>
-                                        <td colSpan={4} align="center">No records found</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </Table>
-                    </Col>
-                    <Col xs={1}>
-                        <Button
-                            onClick={() => handleAction('/departament/create')}
-                            className="btn-create"
-                            title="New Departament"
-                        >
-                            <FontAwesomeIcon size="lg" icon={faPlusCircle} />
-                        </Button>
-                    </Col>
-                    <style jsx>
-                        {`.btn-create{
-                            border-radius: 50px;
-                            padding: 6px 7px 6px 7px;
-                           }
-                        `}
-                    </style>
-                </Row>
-            </CardBody>
-            <DeleteDepartment active={state.active} departmentDelete={state.departmentDelete} />
-        </Card>
-    )
+      <Card>
+        <CardBody>
+          <Row>
+            <Col xs={11}>
+              <Table striped>
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {state.departaments.length > 0 ? (
+                    state.departaments.map((depart: any, index: any) => (
+                      <tr key={index}>
+                        <th scope="row">{depart.id}</th>
+                        <td>{depart.name}</td>
+                        <td>{depart.description}</td>
+                        <td>
+                          <Button
+                            onClick={() =>
+                              handleAction("/departament/edit", depart)
+                            }
+                            color="link"
+                            title="Edit Departament"
+                          >
+                            Edit
+                          </Button>
+                          {""}
+                          <Button
+                            onClick={() => handleDelete(depart)}
+                            color="link"
+                            title="Delete Departament"
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={4} align="center">
+                        No records found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </Col>
+            <Col xs={1}>
+              <Button
+                onClick={() => handleAction("/departament/create")}
+                className="btn-create"
+                title="New Departament"
+              >
+                <FontAwesomeIcon size="lg" icon={faPlusCircle} />
+              </Button>
+            </Col>
+            <style jsx>
+              {`
+                .btn-create {
+                  border-radius: 50px;
+                  padding: 6px 7px 6px 7px;
+                }
+              `}
+            </style>
+          </Row>
+        </CardBody>
+        <DeleteDepartment
+          listDepartment={listDepartment}
+          active={state.active}
+          departmentDelete={state.departmentDelete}
+        />
+      </Card>
+    );
 }
 
 export default DepartamentList

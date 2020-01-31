@@ -1,13 +1,20 @@
-import React from 'react';
-import { StateProvider, initialState, reducer } from './contexts/index'
-import { Layout, Header } from './components/index'
-import { Index, Dashboard, DepartamentList, CreateOrEditDepartment } from './views/index'
-import { Router, navigate } from '@reach/router'
+import React from "react";
+import { StateProvider, initialState, reducer } from "./contexts/index";
+import { Layout, Header } from "./components/index";
+import {
+  Index,
+  Dashboard,
+  DepartamentList,
+  CreateOrEditDepartment,
+  Home,
+  Courses,
+  CreateOrEditCourse
+} from "./views/index";
+import { Router, navigate } from "@reach/router";
 
 const App: React.FC = () => {
-
   if (Object.keys(initialState.user).length === 0) {
-    navigate('/')
+    navigate("/");
   }
 
   return (
@@ -16,18 +23,22 @@ const App: React.FC = () => {
         <Header />
         <Router>
           {/* Index */}
-          <Index path='/' />
+          <Index path="/" />
           {/* Dashboard */}
-          <Dashboard path='/dashboard' />
+          <Dashboard path="/dashboard" />
           {/* Dapartaments */}
-          <DepartamentList path='/departament' />
-          <CreateOrEditDepartment path='/departament/:action' />
+          <DepartamentList path="/departament" />
+          <CreateOrEditDepartment path="/departament/:action" />
           {/* Courses */}
+          <Courses path="/courses" />
+          <CreateOrEditCourse path="/course/:action" />
           {/* Instructors */}
+
+          <Home path="/home" />
         </Router>
       </Layout>
     </StateProvider>
   );
-}
+};
 
 export default App;

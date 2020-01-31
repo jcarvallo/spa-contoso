@@ -6,7 +6,7 @@ import { Nav, NavItem, NavLink, Row, Col, Button } from 'reactstrap';
 import { navigate } from '@reach/router';
 
 const Dashboard: FC<ContosoModel> = () => {
-    const [context, dispatch]: any = useStateValue();
+    const [context, dispatch]:any = useStateValue();
     
     useEffect(() => {
         dispatch({ type: 'changeHeader', title: 'Contoso  University', dashboard:true })

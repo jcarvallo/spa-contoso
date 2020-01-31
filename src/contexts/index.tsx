@@ -11,7 +11,7 @@ export const initialState = {
     title: 'Contoso University',
     isLogo: true,
     navBar: [{ href: '/departament', label: 'Departments' },
-    { href: '#', label: 'Courses' },
+    { href: '/courses', label: 'Courses' },
     { href: '#', label: 'Instructors' }],
     back: false,
     user: {},

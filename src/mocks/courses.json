@@ -1,1 +1,31 @@
-[]
+[
+    {
+        "ID": 1,
+        "Title": "Trigonometria",
+        "Department": {
+            "ID": 1,
+            "Title": "Math"
+        },
+        "Capacity": 30,
+        "Instructor": [
+            {
+                "ID": 1,
+                "Name": "Jose"
+            },
+            {
+                "ID": 2,
+                "Name": "Pedro"
+            }
+        ]
+    },
+    {
+        "ID": 2,
+        "Title": "Spanish",
+        "Department": {
+            "ID": 2,
+            "Title": "Languages"
+        },
+        "Capacity": 25,
+        "Instructor": []
+    }
+]
